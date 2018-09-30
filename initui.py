@@ -96,7 +96,7 @@ def runfunc(master):
         # dateDone_entry.place(x=250, y=425)
 
 
-        def updater():
+        def updater_panel():
             #Remove left panel
             left.pack_forget()
 
@@ -112,17 +112,18 @@ def runfunc(master):
 
             # search button func
             def search():
-
+                idVal = id_entry.get().strip()
                 def update():
                     pass
                 def delete():
-                    result = tkinter.messagebox.askquestion("Confirmation", "Are you sure you want to delete this entry?")
+                    delVal = int(idVal)
+                    result = tkinter.messagebox.askquestion("Confirmation", "Are you sure you want to delete entry with ID: %d?" %delVal)
                     if result == 'yes':
-                        print("Deleted")
-                    else:
-                        print("Not Deleted")
+                        cur.execute("DELETE FROM log WHERE id = ?", (delVal,))
+                        conn.commit()
+                        dbtobox()
+                        tkinter.messagebox.showinfo("Information", "Entry %d was deleted sucessfully." %delVal)
 
-                idVal = id_entry.get().strip()
                 if idVal == "":
                     tkinter.messagebox.showerror("Error", "Please enter an ID")
                 elif not helpers.RepresentsInt(idVal):
@@ -136,11 +137,11 @@ def runfunc(master):
                         tkinter.messagebox.showerror("Error", "No such ID found")
                     else:
 
-                        Uname = Label(leftUpdater, text="Client Name:", font=(itemFont), bg=bgLight, fg='white')
-                        Uname.place(x=15, y=140)
-                        Uname_entry = Entry(leftUpdater, width=30)
-                        Uname_entry.place(x=250, y=145)
-                        Uname_entry.insert(0, data[0][1])
+                        name = Label(leftUpdater, text="Client Name:", font=(itemFont), bg=bgLight, fg='white')
+                        name.place(x=15, y=140)
+                        name_entry = Entry(leftUpdater, width=30)
+                        name_entry.place(x=250, y=145)
+                        name_entry.insert(0, data[0][1])
 
                         Uphone = Label(leftUpdater, text="Client Phone:", font=(itemFont), bg=bgLight, fg='white')
                         Uphone.place(x=15, y=180)
@@ -284,7 +285,7 @@ def runfunc(master):
 
         submitButton = Button(left, text = "Add Entry", width = 10, height = 1, bg = "orange", command = submit)
         clearButton = Button(left, text = "Clear", width = 5, height = 1, bg = "orange", command = clearentries)
-        updateButton = Button(left, text="Update", width = 10, height= 2, bg = "orange", command = updater)
+        updateButton = Button(left, text="Update", width = 10, height= 2, bg = "orange", command = updater_panel)
         submitButton.place (x=315, y=400)
         clearButton.place (x=265, y=400)
         updateButton.place(x=290, y=450)
