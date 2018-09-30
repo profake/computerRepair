@@ -112,6 +112,16 @@ def runfunc(master):
 
             # search button func
             def search():
+
+                def update():
+                    pass
+                def delete():
+                    result = tkinter.messagebox.askquestion("Confirmation", "Are you sure you want to delete this entry?")
+                    if result == 'yes':
+                        print("Deleted")
+                    else:
+                        print("Not Deleted")
+
                 idVal = id_entry.get().strip()
                 if idVal == "":
                     tkinter.messagebox.showerror("Error", "Please enter an ID")
@@ -174,8 +184,8 @@ def runfunc(master):
                         UdateDone_entry.place(x=250, y=425)
                         UdateDone_entry.insert(0, data[0][8])
 
-                        updateButton = Button(leftUpdater, text="Update Entry", width=10, height=1, bg="orange", command=submit)
-                        deleteButton = Button(leftUpdater, text="Delete Entry", width=10, height=1, bg="orange", command=submit)
+                        updateButton = Button(leftUpdater, text="Update Entry", width=10, height=1, bg="orange", command=update)
+                        deleteButton = Button(leftUpdater, text="Delete Entry", width=10, height=1, bg="orange", command=delete)
                         updateButton.place(x=250, y=460)
                         deleteButton.place(x=350, y=460)
             #Back to entry panel
