@@ -16,7 +16,6 @@ def listPopulator():
     cur.execute("SELECT * FROM log")
     for row in cur.fetchall():
         items_list.append(row)
-#------------------
 
 def runfunc(master):
         #Colors and font
@@ -33,7 +32,7 @@ def runfunc(master):
         left.pack(side = LEFT)
 
         #Right panel
-        right = Frame(master, width = 755, height = 664, bg = bgDark)
+        right = Frame(master, width = 765, height = 664, bg = bgDark)
         right.place(x=520, y=77)
         #right.pack()
 
@@ -179,8 +178,10 @@ def runfunc(master):
                     except sqlite3.IntegrityError as e:
                         tkinter.messagebox.showerror("Error", "ID already in use")
 
-        submitButton = Button(left, text = "Add Entry", width = 15, height = 1, bg = "orange", command = submit)
-        submitButton.place (x=285, y=400)
+        submitButton = Button(left, text = "Add Entry", width = 10, height = 1, bg = "orange", command = submit)
+        clearButton = Button(left, text = "Clear", width = 5, height = 1, bg = "orange", command = clearentries)
+        submitButton.place (x=315, y=400)
+        clearButton.place (x=265, y=400)
 
 class initUI:
     def __init__(self, master):
