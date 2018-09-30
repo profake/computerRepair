@@ -31,10 +31,162 @@ def runfunc(master):
         left = Frame(master, width = 807, height = 664, bg = bgLight)
         left.pack(side = LEFT)
 
+        #Left updater panel
+        leftUpdater = Frame(master, width = 807, height = 664, bg = bgLight)
+
         #Right panel
         right = Frame(master, width = 765, height = 664, bg = bgDark)
         right.place(x=520, y=77)
         #right.pack()
+        # Title
+        title = Label(text="☇Lepot Servicing & Repairs", font='Ubuntu 26 bold', bg="orange", fg='white')
+        title.place(x=0, y=0)
+
+        # Add to log
+        heading = Label(left, text="Add to log", font='Ubuntu 20 bold', bg=bgLight, fg='white')
+        heading.place(x=10, y=30)
+
+        # Log
+        headingR = Label(right, text="Log", font='Ubuntu 20 bold', bg="orange", fg=bgLight)
+        headingR.place(x=30, y=0)
+
+        id = Label(left, text="ID:", font=(itemFont), bg=bgLight, fg='white')
+        id.place(x=15, y=100)
+        id_entry = Entry(left, width=30)
+        id_entry.place(x=250, y=105)
+
+        name = Label(left, text="Client Name:", font=(itemFont), bg=bgLight, fg='white')
+        name.place(x=15, y=140)
+        name_entry = Entry(left, width=30)
+        name_entry.place(x=250, y=145)
+
+        phone = Label(left, text="Client Phone:", font=(itemFont), bg=bgLight, fg='white')
+        phone.place(x=15, y=180)
+        phone_entry = Entry(left, width=30)
+        phone_entry.place(x=250, y=185)
+
+        dateAdd = Label(left, text="Date of Addition:", font=(itemFont), bg=bgLight, fg='white')
+        dateAdd.place(x=15, y=220)
+        dateAdd_entry = Entry(left, width=30)
+        dateAdd_entry.place(x=250, y=225)
+
+        brand = Label(left, text="Brand:", font=(itemFont), bg=bgLight, fg='white')
+        brand.place(x=15, y=260)
+        brand_entry = Entry(left, width=30)
+        brand_entry.place(x=250, y=265)
+
+        model = Label(left, text="Model:", font=(itemFont), bg=bgLight, fg='white')
+        model.place(x=15, y=300)
+        model_entry = Entry(left, width=30)
+        model_entry.place(x=250, y=305)
+
+        problem = Label(left, text="Problem:", font=(itemFont), bg=bgLight, fg='white')
+        problem.place(x=15, y=340)
+        problem_entry = Entry(left, width=30)
+        problem_entry.place(x=250, y=345)
+
+        # status = Label(left, text = "Status:", font=(itemFont), bg=bgLight, fg = 'white')
+        # status.place(x = 15, y = 380)
+        # status_entry = Entry(left, width=30)
+        # status_entry.place(x=250, y=385)
+
+        # dateDone = Label(left, text = "Date done:", font=(itemFont), bg=bgLight)
+        # dateDone.place(x = 15, y = 420)
+        # dateDone_entry = Entry(left, width=30)
+        # dateDone_entry.place(x=250, y=425)
+
+
+        def updater():
+            #Remove left panel
+            left.pack_forget()
+
+            #Add leftupdater to screen
+            leftUpdater.pack(side = LEFT)
+            headingUpd = Label(leftUpdater, text="Update log", font='Ubuntu 20 bold', bg=bgLight, fg='white')
+            headingUpd.place(x=10, y=30)
+
+            id = Label(leftUpdater, text="Enter ID to update:", font=(itemFont), bg=bgLight, fg='white')
+            id.place(x=15, y=100)
+            id_entry = Entry(leftUpdater, width=30)
+            id_entry.place(x=250, y=105)
+
+            # search button func
+            def search():
+                idVal = id_entry.get().strip()
+                if idVal == "":
+                    tkinter.messagebox.showerror("Error", "Please enter an ID")
+                elif not helpers.RepresentsInt(idVal):
+                    tkinter.messagebox.showerror("Error", "Please enter a valid integer ID")
+                else:
+                    idVal = int(idVal)
+                    cur.execute("SELECT * FROM log WHERE id = ?", (idVal,))
+                    data = cur.fetchall()
+                    #if not means empty
+                    if not data:
+                        tkinter.messagebox.showerror("Error", "No such ID found")
+                    else:
+
+                        Uname = Label(leftUpdater, text="Client Name:", font=(itemFont), bg=bgLight, fg='white')
+                        Uname.place(x=15, y=140)
+                        Uname_entry = Entry(leftUpdater, width=30)
+                        Uname_entry.place(x=250, y=145)
+                        Uname_entry.insert(0, data[0][1])
+
+                        Uphone = Label(leftUpdater, text="Client Phone:", font=(itemFont), bg=bgLight, fg='white')
+                        Uphone.place(x=15, y=180)
+                        Uphone_entry = Entry(leftUpdater, width=30)
+                        Uphone_entry.place(x=250, y=185)
+                        Uphone_entry.insert(0, data[0][2])
+
+                        UdateAdd = Label(leftUpdater, text="Date of Addition:", font=(itemFont), bg=bgLight, fg='white')
+                        UdateAdd.place(x=15, y=220)
+                        UdateAdd_entry = Entry(leftUpdater, width=30)
+                        UdateAdd_entry.place(x=250, y=225)
+                        UdateAdd_entry.insert(0, data[0][3])
+
+                        Ubrand = Label(leftUpdater, text="Brand:", font=(itemFont), bg=bgLight, fg='white')
+                        Ubrand.place(x=15, y=260)
+                        Ubrand_entry = Entry(leftUpdater, width=30)
+                        Ubrand_entry.place(x=250, y=265)
+                        Ubrand_entry.insert(0, data[0][4])
+
+                        Umodel = Label(leftUpdater, text="Model:", font=(itemFont), bg=bgLight, fg='white')
+                        Umodel.place(x=15, y=300)
+                        Umodel_entry = Entry(leftUpdater, width=30)
+                        Umodel_entry.place(x=250, y=305)
+                        Umodel_entry.insert(0, data[0][5])
+
+                        Uproblem = Label(leftUpdater, text="Problem:", font=(itemFont), bg=bgLight, fg='white')
+                        Uproblem.place(x=15, y=340)
+                        Uproblem_entry = Entry(leftUpdater, width=30)
+                        Uproblem_entry.place(x=250, y=345)
+                        Uproblem_entry.insert(0, data[0][6])
+
+                        Ustatus = Label(leftUpdater, text = "Status:", font=(itemFont), bg=bgLight, fg = 'white')
+                        Ustatus.place(x = 15, y = 380)
+                        Ustatus_entry = Entry(leftUpdater, width=30)
+                        Ustatus_entry.place(x=250, y=385)
+                        Ustatus_entry.insert(0, data[0][7])
+
+                        UdateDone = Label(leftUpdater, text = "Date done:", font=(itemFont), bg=bgLight, fg='white')
+                        UdateDone.place(x = 15, y = 420)
+                        UdateDone_entry = Entry(leftUpdater, width=30)
+                        UdateDone_entry.place(x=250, y=425)
+                        UdateDone_entry.insert(0, data[0][8])
+
+                        updateButton = Button(leftUpdater, text="Update Entry", width=10, height=1, bg="orange", command=submit)
+                        deleteButton = Button(leftUpdater, text="Delete Entry", width=10, height=1, bg="orange", command=submit)
+                        updateButton.place(x=250, y=460)
+                        deleteButton.place(x=350, y=460)
+            #Back to entry panel
+            def goback():
+                leftUpdater.pack_forget()
+                left.pack(side=LEFT)
+
+            backButton = Button(leftUpdater, text="Go back", width=10, height=1, bg="orange", command=goback)
+            backButton.place(x=415, y=40)
+            searchButton = Button(leftUpdater, text = "Search", width = 5, height = 1, bg = "orange", command = search)
+            searchButton.place(x=450, y=102)
 
         #--------------------------
         container = ttk.Frame(right)
@@ -86,64 +238,6 @@ def runfunc(master):
                 tree.move(item[1], '', ix)
             tree.heading(col, command=lambda col=col: sortby(tree, col, int(not descending)))
 
-        #Title
-        title = Label(text = "☇Lepot Servicing & Repairs", font = 'Ubuntu 26 bold', bg = "orange", fg = 'white')
-        title.place(x=0, y=0)
-
-        #Add to log
-        heading = Label(left, text="Add to log", font='Ubuntu 20 bold', bg=bgLight, fg='white')
-        heading.place(x=10, y=30)
-
-        #Log
-        headingR = Label(right, text = "Log", font = 'Ubuntu 20 bold', bg = "orange", fg = bgLight)
-        headingR.place(x=30, y=0)
-
-
-        id = Label(left, text = "ID:", font=(itemFont), bg=bgLight, fg = 'white')
-        id.place(x = 15, y = 100)
-        id_entry = Entry(left, width = 30)
-        id_entry.place(x=250, y=105)
-
-        name = Label(left, text = "Client Name:", font=(itemFont), bg=bgLight, fg = 'white')
-        name.place(x = 15, y = 140)
-        name_entry = Entry(left, width=30)
-        name_entry.place(x=250, y=145)
-
-        phone = Label(left, text = "Client Phone:", font=(itemFont), bg=bgLight, fg = 'white')
-        phone.place(x = 15, y = 180)
-        phone_entry = Entry(left, width=30)
-        phone_entry.place(x=250, y=185)
-
-        dateAdd = Label(left, text = "Date of Addition:", font=(itemFont), bg=bgLight, fg = 'white')
-        dateAdd.place(x = 15, y = 220)
-        dateAdd_entry = Entry(left, width=30)
-        dateAdd_entry.place(x=250, y=225)
-
-        brand = Label(left, text = "Brand:", font=(itemFont), bg=bgLight, fg = 'white')
-        brand.place(x = 15, y = 260)
-        brand_entry = Entry(left, width=30)
-        brand_entry.place(x=250, y=265)
-
-        model = Label(left, text = "Model:", font=(itemFont), bg=bgLight, fg = 'white')
-        model.place(x = 15, y = 300)
-        model_entry = Entry(left, width=30)
-        model_entry.place(x=250, y=305)
-
-        problem = Label(left, text = "Problem:", font=(itemFont), bg=bgLight, fg = 'white')
-        problem.place(x = 15, y = 340)
-        problem_entry = Entry(left, width=30)
-        problem_entry.place(x=250, y=345)
-
-        #status = Label(left, text = "Status:", font=(itemFont), bg=bgLight, fg = 'white')
-        #status.place(x = 15, y = 380)
-        #status_entry = Entry(left, width=30)
-        #status_entry.place(x=250, y=385)
-
-        #dateDone = Label(left, text = "Date done:", font=(itemFont), bg=bgLight)
-        #dateDone.place(x = 15, y = 420)
-        #dateDone_entry = Entry(left, width=30)
-        #dateDone_entry.place(x=250, y=425)
-
         def clearentries():
             id_entry.delete(0, END)
             name_entry.delete(0, END)
@@ -170,7 +264,7 @@ def runfunc(master):
                 else:
                     try:
                         cur.execute("INSERT INTO log VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)",
-                                ( idVal, nameVal, phoneVal, dateAddVal, brandVal, modelVal, problemVal, 'Not Done', ''))
+                                (idVal, nameVal, phoneVal, dateAddVal, brandVal, modelVal, problemVal, 'Not Done', ''))
                         conn.commit()
                         dbtobox()
                         tkinter.messagebox.showinfo("Message", "Entry added successfully for " + brandVal + " " + modelVal)
@@ -180,8 +274,10 @@ def runfunc(master):
 
         submitButton = Button(left, text = "Add Entry", width = 10, height = 1, bg = "orange", command = submit)
         clearButton = Button(left, text = "Clear", width = 5, height = 1, bg = "orange", command = clearentries)
+        updateButton = Button(left, text="Update", width = 10, height= 2, bg = "orange", command = updater)
         submitButton.place (x=315, y=400)
         clearButton.place (x=265, y=400)
+        updateButton.place(x=290, y=450)
 
 class initUI:
     def __init__(self, master):
