@@ -114,7 +114,30 @@ def runfunc(master):
             def search():
                 idVal = id_entry.get().strip()
                 def update():
-                    pass
+                    idVal = id_entry.get().strip()
+                    nameVal = name_entry.get().strip()
+                    phoneVal = Uphone_entry.get().strip()
+                    dateAddVal = UdateAdd_entry.get().strip()
+                    brandVal = Ubrand_entry.get().strip()
+                    modelVal = Umodel_entry.get().strip()
+                    problemVal = Uproblem_entry.get().strip()
+                    statusVal = Ustatus_entry.get().strip()
+                    dateDoneVal = UdateDone_entry.get().strip()
+                    if idVal == '' or nameVal == '' or phoneVal == '' or dateAddVal == '' or brandVal == '' or modelVal == '' or problemVal == '' or statusVal == '' or dateDoneVal == '':
+                        tkinter.messagebox.showerror("Warning", "Please fill up all the entries")
+                    else:
+                        if not helpers.RepresentsInt(idVal):
+                            tkinter.messagebox.showerror("Warning", "Please enter an integer value as ID")
+                        else:
+                            try:
+                                cur.execute("UPDATE log SET id = ?, client_name = ?, client_phone = ?, date_entered = ?, brand = ?, model = ?, problem = ?, status = ?, date_done = ? WHERE id = ?",
+                                            (idVal, nameVal, phoneVal, dateAddVal, brandVal, modelVal, problemVal, statusVal, dateDoneVal, idVal))
+                                conn.commit()
+                                dbtobox()
+                                tkinter.messagebox.showinfo("Message",
+                                                            "Entry updated successfully for ID: " + idVal + " " + brandVal + " " + modelVal)
+                            except sqlite3.IntegrityError as e:
+                                tkinter.messagebox.showerror("Error", "ID already in use")
                 def delete():
                     delVal = int(idVal)
                     result = tkinter.messagebox.askquestion("Confirmation", "Are you sure you want to delete entry with ID: %d?" %delVal)
