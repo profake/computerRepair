@@ -4,6 +4,7 @@ import sqlite3
 import helpers
 import tkinter.ttk as ttk
 import tkinter.font as tkFont
+import os
 #db stuff
 conn = sqlite3.connect('database.db')
 cur = conn.cursor()
@@ -20,11 +21,11 @@ def listPopulator():
 def runfunc(master):
         #Colors and font
         itemFont = "calibri 14 bold"
-        bgLight = '#161616'
-        bgDark = '#333333'
+        bgLight = '#990038'
+        bgDark = '#670026'
 
         #canvas test
-        canvas = Canvas(master, width=1280, height=50, bg = "orange", highlightthickness=0)
+        canvas = Canvas(master, width=1280, height=50, bg = "#340012", highlightthickness=0)
         canvas.pack()
 
         #Left panel
@@ -39,7 +40,7 @@ def runfunc(master):
         right.place(x=520, y=77)
         #right.pack()
         # Title
-        title = Label(text="☇Lepot Servicing & Repairs", font='Ubuntu 26 bold', bg="orange", fg='white')
+        title = Label(text="☇Lepot Servicing & Repairs", font='Ubuntu 26 bold', bg="#340012", fg='white')
         title.place(x=0, y=0)
 
         # Add to log
@@ -47,7 +48,7 @@ def runfunc(master):
         heading.place(x=10, y=30)
 
         # Log
-        headingR = Label(right, text="Log", font='Ubuntu 20 bold', bg="orange", fg=bgLight)
+        headingR = Label(right, text="Log", font='Ubuntu 20 bold', bg="#340012", fg="white")
         headingR.place(x=30, y=0)
 
         id = Label(left, text="ID:", font=(itemFont), bg=bgLight, fg='white')
@@ -208,8 +209,8 @@ def runfunc(master):
                         UdateDone_entry.place(x=250, y=425)
                         UdateDone_entry.insert(0, data[0][8])
 
-                        updateButton = Button(leftUpdater, text="Update Entry", width=10, height=1, bg="orange", command=update)
-                        deleteButton = Button(leftUpdater, text="Delete Entry", width=10, height=1, bg="orange", command=delete)
+                        updateButton = Button(leftUpdater, text="Update Entry", width=10, height=1, bg="white", command=update)
+                        deleteButton = Button(leftUpdater, text="Delete Entry", width=10, height=1, bg="white", command=delete)
                         updateButton.place(x=250, y=460)
                         deleteButton.place(x=350, y=460)
             #Back to entry panel
@@ -217,9 +218,9 @@ def runfunc(master):
                 leftUpdater.pack_forget()
                 left.pack(side=LEFT)
 
-            backButton = Button(leftUpdater, text="Go back", width=10, height=1, bg="orange", command=goback)
+            backButton = Button(leftUpdater, text="Go back", width=10, height=1, bg="white", command=goback)
             backButton.place(x=415, y=40)
-            searchButton = Button(leftUpdater, text = "Search", width = 5, height = 1, bg = "orange", command = search)
+            searchButton = Button(leftUpdater, text = "Search", width = 5, height = 1, bg = "white", command = search)
             searchButton.place(x=450, y=102)
 
         #--------------------------
@@ -305,13 +306,20 @@ def runfunc(master):
                         clearentries()
                     except sqlite3.IntegrityError as e:
                         tkinter.messagebox.showerror("Error", "ID already in use")
+        def logOut():
+            master.destroy()
+            os.system('python windowPickerStarter.py')
 
-        submitButton = Button(left, text = "Add Entry", width = 10, height = 1, bg = "orange", command = submit)
-        clearButton = Button(left, text = "Clear", width = 5, height = 1, bg = "orange", command = clearentries)
-        updateButton = Button(left, text="Update", width = 10, height= 2, bg = "orange", command = updater_panel)
+        submitButton = Button(left, text = "Add Entry", width = 10, height = 1, bg = "white", command = submit)
+        clearButton = Button(left, text = "Clear", width = 5, height = 1, bg = "white", command = clearentries)
+        updateButton = Button(left, text="Update", width = 10, height= 2, bg = "white", command = updater_panel)
+        logoutButton = Button(right, text="Log Out", width=10, height=1, bg="white", command=logOut)
         submitButton.place (x=315, y=400)
         clearButton.place (x=265, y=400)
         updateButton.place(x=290, y=450)
+        logoutButton.place(x=600, y=10)
+
+
 
 class initUI:
     def __init__(self, master):

@@ -7,10 +7,10 @@ x = initui.initUI(root) #it's in a different file because its cluttered :@
 
 #config root (main) window
 root.geometry("1280x768")
-root.configure(background='orange')
+root.configure(background='#340012')
 root.resizable(False, False)
 root.wm_title("Lepot Servicing & Repairs")
-#Run program
 
+#Run program
 root.mainloop()
 #-----------------
